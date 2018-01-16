@@ -14,8 +14,8 @@ const objectsParser = (...params) =>{
         let foundKeys = [];
         let notFoundKeys = [];
 
-        for(let key of keys){
-            if((key in object) && (!foundKeys.includes(key)))
+        for(let key of Object.keys(object)){
+            if((keys.includes(key)) && (!foundKeys.includes(key)))
                 foundKeys.push(key);
             else if((!foundKeys.includes(key)) && (!notFoundKeys.includes(key)))
                 notFoundKeys.push(key);        
@@ -25,9 +25,22 @@ const objectsParser = (...params) =>{
         parsedObject.notFoundKeys = notFoundKeys;
     }
 
+    if (values !== undefined){
+        let foundValues = [];
+        let notFoundValues = [];
+
+        for(let value of Object.values(object)){
+            if((values.includes(value)) && (!foundValues.includes(value)))
+                foundValues.push(value);
+            else if((!foundValues.includes(value)) && (!notFoundValues.includes(value)))
+                notFoundValues.push(value);        
+        }
+        
+        parsedObject.foundValues = foundValues;
+        parsedObject.notFoundValues = notFoundValues;
+    }
+
     return parsedObject;
 };
-
-console.log(objectsParser({'test':2, 3:'news'}, [3, 'ddd', 3, 3, 3, 3, 3, 3, 3, 'test', 5, 1 + 2, 'rrrrr', 342], 1));
 
 module.exports = objectsParser;
